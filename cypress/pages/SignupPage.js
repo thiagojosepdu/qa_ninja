@@ -46,4 +46,4 @@ cy.get('input[accept^="image"]').attachFile(entregador.cnh)//carrega a imagem au
 }
 
 
-export default SignupPage;//estou exportando essa página
+export default new SignupPage();//estou exportando essa página
