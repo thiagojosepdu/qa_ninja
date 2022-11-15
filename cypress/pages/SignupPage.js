@@ -2,7 +2,7 @@ class SignupPage {//representa a página de cadastro
 
     go() {//isso é uma função e não precisa colocar o nome function antes. Essa função faz uma verificação inicial
         cy.viewport(1400, 900)
-        cy.visit('https://buger-eats.vercel.app')
+        cy.visit('/')
 
         cy.get('a[href="/deliver"]').click()
         cy.get('#page-deliver > form > h1').should('have.text', 'Cadastre-se para  fazer entregas')
@@ -13,7 +13,7 @@ class SignupPage {//representa a página de cadastro
 
     fillForm(entregador) {//função que preenche o formulário
 
-        cy.get('input[name="name"] ').type(entregador.nome)
+        cy.get('input[name="fullName"] ').type(entregador.nome)
         cy.get('input[name="cpf"] ').type(entregador.cpf)
         cy.get('input[name="email"] ').type(entregador.email)
         cy.get('input[name="whatsapp"] ').type(entregador.whats)
@@ -43,7 +43,12 @@ class SignupPage {//representa a página de cadastro
         cy.get('.swal2-container .swal2-html-container')
             .should('have.text', expectedMessage)// esse cy.get que tem css selector usando ponto é mais uma forma de pegar um elemento, então ao inves de fazer usando uma div, como div[class="swal2-popup swal2-modal swal2-icon-success swal2-show"], podemos usar o ponto para nagevar em cada elemento
     }
+
+    alertMessageShouldBe(expectedMessage){
+        //cy.get('.alert-error').should('have.text', expectedMessage)//valida a mensagem de erro ao colocar um CPF invalido
+        cy.contains('.alert-error', expectedMessage).should('be.visible')//como tem 7 elementos com a mesma mensagem, essa função ela pega o get alert-error mais o texto, que são diferentes para todas as sete mensagem
+    }
 }
 
 
-export default SignupPage;//estou exportando essa página
+export default new SignupPage;//estou exportando essa página. Ao utilizar o new eu já implemento toda a camada.
